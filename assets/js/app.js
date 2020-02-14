@@ -1,20 +1,22 @@
 // Variables.
 const listaTweets = document.getElementById('lista-tweets');
-
+const formulario = document.querySelector('#formulario');
 // Event Listeners.
 eventListeners();
 
 function eventListeners(){
   // Add Tweeets.
-  document.querySelector('#formulario').addEventListener('submit', agregarTweet);
+  formulario.addEventListener('submit', agregarTweet);
 
   // Delete Tweeets.
   listaTweets.addEventListener('click', borrarTweet);
 }
 
-// Funciones.
+// Functions.
+// Create tweeet on DOM.
 function agregarTweet(e){
   e.preventDefault();
+  // Get data from textarea.
   const tweet = document.getElementById('tweet').value;
   const botonBorrar = document.createElement('a');
   botonBorrar.classList = 'borrar-tweet';
@@ -23,12 +25,34 @@ function agregarTweet(e){
   li.innerText = tweet;
   li.appendChild(botonBorrar);
   listaTweets.appendChild(li);
+  // Add to Local Storage.
+  addTweetToLocalStorage(tweet);
 }
-
+// Remove tweeet on DOM.
 function borrarTweet(e){
     e.preventDefault();
     if(e.target.classList[0]=== 'borrar-tweet'){
       console.log(e.target.parentElement.remove());
-      alert('Tweet Removed');
     }
+}
+
+// Add to local storage.
+function addTweetToLocalStorage(tweet){
+  let tweets;
+  tweets = getLocalStorage();
+  tweets.push(tweet);
+  console.log(tweets);
+  localStorage.setItem('tweets', JSON.stringify(tweets));
+}
+
+// Get tweets from local storage.
+function getLocalStorage(){
+  let tweets;
+  if(localStorage.getItem('tweets') === null){
+    tweets = [];
+  } 
+  else{
+    tweets = JSON.parse(localStorage.getItem('tweets'));
+  }
+  return tweets;
 }
