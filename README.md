@@ -1,6 +1,6 @@
 # Local Storage Posts.
 
-This project consists of use the local storage to store the posts that the user creates.
+This project consists of use the local storage to store the tweeets that the user creates.
 
 ## Built With
 
