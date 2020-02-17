@@ -35,9 +35,10 @@ function agregarTweet(e){
 function borrarTweet(e){
     e.preventDefault();
     if(e.target.classList[0]=== 'borrar-tweet'){
-      console.log(e.target.parentElement.remove());
+      e.target.parentElement.remove() ;
+      eraseTweetLocalStorage(e.target.parentElement.innerText);
     }
-}
+} 
 
 // Show data from local storage on view.
 function localStorageReady(){
@@ -71,4 +72,17 @@ function getLocalStorage(){
     tweets = JSON.parse(localStorage.getItem('tweets'));
   }
   return tweets;
+}
+
+// Remove from local storage.
+function eraseTweetLocalStorage(tweet){
+  tweet = tweet.slice(0, tweet.length - 1);
+  let tweets = getLocalStorage();
+  tweets.forEach(function(t, index){
+    if(tweet === t){
+      tweets.splice(index, 1);
+    }
+  });
+  // Reescribirmos en el Local Storage automaticamente elimina lo que ya extista.
+  localStorage.setItem('tweets', JSON.stringify(tweets));
 }
